@@ -14,7 +14,6 @@ router.get('/song/:id', (req, res) => {
 router.get('/img/:id', (req, res) => {
   const { id } = req.params
   const song = musicService.getMusicById(Number(id))
-  console.log(song)
   res.sendFile(song.imgPath)
 })
 
