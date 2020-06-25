@@ -7,7 +7,9 @@ const port = config.get('port') || 5000
 const app = express()
 
 app.use(express.json())
-app.use('/music', express.static(path.join(__dirname, 'music')))
+
+app.use('/api/music', require('./routes/music.route'))
+app.use('/api/music', express.static(path.resolve(__dirname, 'data')))
 
 // Send static files & index.html in Production mode
 if (process.env.NODE_ENV === 'production') {
