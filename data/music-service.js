@@ -2,7 +2,7 @@ const path = require('path')
 
 let count = 0
 
-const getItem = (name, albom) => ({
+const addItem = (name, albom) => ({
   id: count++,
   name,
   albom,
@@ -11,39 +11,67 @@ const getItem = (name, albom) => ({
 })
 
 const config = [
-  getItem('Anachronist - Bits of Color', 'VA - Pure Synthwave'),
-  getItem('Carbon Killer - The Last Stand', 'VA - Pure Synthwave'),
-  getItem('Code Elektro - N3On', 'VA - Pure Synthwave'),
-  getItem('Compilerbau - Neon Drive', 'VA - Pure Synthwave'),
-  getItem(
+  addItem('Anachronist - Bits of Color', 'VA - Pure Synthwave'),
+  addItem('Carbon Killer - The Last Stand', 'VA - Pure Synthwave'),
+  addItem('Code Elektro - N3On', 'VA - Pure Synthwave'),
+  addItem('Compilerbau - Neon Drive', 'VA - Pure Synthwave'),
+  addItem(
     'Cosaquitos En Globo - Cruzando el Puente (Instrumental)',
     'VA - Pure Synthwave'
   ),
-  getItem(
+  addItem(
     'Douglas Holmquist feat. Susanna Lundgren - Something Beneath',
     'VA - Pure Synthwave'
   ),
-  getItem('Exiles - Red Lights', 'VA - Pure Synthwave'),
-  getItem('Fatal Friction - I Talk To You (Vocal Мix)', 'VA - Pure Synthwave'),
-  getItem("Futurecop! feat. LGHTNNG - La Foi En L'eau", 'VA - Pure Synthwave'),
-  getItem('Holew - Neon Streets', 'VA - Pure Synthwave'),
-  getItem('LeBrock - One Night', 'VA - Pure Synthwave'),
-  getItem(
+  addItem('Exiles - Red Lights', 'VA - Pure Synthwave'),
+  addItem('Fatal Friction - I Talk To You (Vocal Мix)', 'VA - Pure Synthwave'),
+  addItem("Futurecop! feat. LGHTNNG - La Foi En L'eau", 'VA - Pure Synthwave'),
+  addItem('Holew - Neon Streets', 'VA - Pure Synthwave'),
+  addItem('LeBrock - One Night', 'VA - Pure Synthwave'),
+  addItem(
     'Midnight Fighters feat. Majo Leiva - Runaway',
     'VA - Pure Synthwave'
   ),
-  getItem("New Arcades - There's Only Two of Us Now", 'VA - Pure Synthwave'),
-  getItem('NINA - Beyond Memory', 'VA - Pure Synthwave'),
-  getItem("Oblique - I'm Your Mirror", 'VA - Pure Synthwave'),
-  getItem('Oscillian - Ad Astra', 'VA - Pure Synthwave'),
-  getItem("Oscillian feat. NINA - Don't Give Up", 'VA - Pure Synthwave'),
-  getItem('Parallels - I.R.L', 'VA - Pure Synthwave'),
-  getItem('September 87 - Ride All Night', 'VA - Pure Synthwave'),
-  getItem('Sunglasses Kid - Graduation', 'VA - Pure Synthwave'),
-  getItem('The Neon Droid - Goodbye Paradise Bay', 'VA - Pure Synthwave'),
-  getItem('The New Division - Vicious', 'VA - Pure Synthwave'),
-  getItem('Traverse Town - Killer', 'VA - Pure Synthwave'),
-  getItem('VHS Dreams - Nightdrive', 'VA - Pure Synthwave')
+  addItem("New Arcades - There's Only Two of Us Now", 'VA - Pure Synthwave'),
+  addItem('NINA - Beyond Memory', 'VA - Pure Synthwave'),
+  addItem("Oblique - I'm Your Mirror", 'VA - Pure Synthwave'),
+  addItem('Oscillian - Ad Astra', 'VA - Pure Synthwave'),
+  addItem("Oscillian feat. NINA - Don't Give Up", 'VA - Pure Synthwave'),
+  addItem('Parallels - I.R.L', 'VA - Pure Synthwave'),
+  addItem('September 87 - Ride All Night', 'VA - Pure Synthwave'),
+  addItem('Sunglasses Kid - Graduation', 'VA - Pure Synthwave'),
+  addItem('The Neon Droid - Goodbye Paradise Bay', 'VA - Pure Synthwave'),
+  addItem('The New Division - Vicious', 'VA - Pure Synthwave'),
+  addItem('Traverse Town - Killer', 'VA - Pure Synthwave'),
+  addItem('VHS Dreams - Nightdrive', 'VA - Pure Synthwave'),
+
+  addItem(
+    'Arcade Dreams (Timecop1983 Remix)',
+    'The Midnight  - The Midnight Remixed'
+  ),
+  addItem('Arcade Dreams', 'The Midnight  - The Midnight Remixed'),
+  addItem('Collateral (Kobana Remix)', 'The Midnight  - The Midnight Remixed'),
+  addItem(
+    'Crystalline (Dan Sieg Remix)',
+    'The Midnight  - The Midnight Remixed'
+  ),
+  addItem(
+    'Daytona (Blood Groove & Kikis Remix)',
+    'The Midnight  - The Midnight Remixed'
+  ),
+  addItem('Kids (PROFF Dub Remix)', 'The Midnight  - The Midnight Remixed'),
+  addItem('Lonely City (ERKKA Remix)', 'The Midnight  - The Midnight Remixed'),
+  addItem('Lost Boy (A.M.R Remix)', 'The Midnight  - The Midnight Remixed'),
+  addItem('Nocturnal (Nox Vahn Remix)', 'The Midnight  - The Midnight Remixed'),
+  addItem('Shadows (Uppermost Remix)', 'The Midnight  - The Midnight Remixed'),
+  addItem(
+    'The Years (Jayeson Andel Remix)',
+    'The Midnight  - The Midnight Remixed'
+  ),
+  addItem(
+    'Tokyo Night Train (Claes Rosen Remix)',
+    'The Midnight  - The Midnight Remixed'
+  )
 ]
 
 module.exports = {

@@ -17,6 +17,12 @@ router.get('/img/:id', (req, res) => {
   res.sendFile(song.imgPath)
 })
 
+router.get('/info/:id', (req, res) => {
+  const { id } = req.params
+  const { name, albom } = musicService.getMusicById(Number(id))
+  res.json({ name, albom })
+})
+
 router.get('/size', (req, res) => {
   res.json({ size: musicService.size })
 })
