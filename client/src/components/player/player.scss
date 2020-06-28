@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "RalewayMedium";
+  src: url("../../fonts/Raleway-Medium.ttf") format("opentype");
+}
+
+@font-face {
+  font-family: "RalewayLight";
+  src: url("../../fonts/Raleway-Light.ttf") format("opentype");
+}
+
 .player-wrapper {
   position: absolute;
   z-index: 1000;
@@ -80,18 +90,18 @@
       font-size: 20px;
       width: 300px;
       height: 230px;
-      font-family: 'Raleway', sans-serif;
+      font-family: 'RalewayLight', sans-serif;
       color: #0C141F;
       text-align: center;
       transition-duration: .5s;
 
       .name {
-        font-weight: 500;
+        font-family: 'RalewayMedium', sans-serif;
         text-align: center;
       }
 
       .albom {
-        font-weight: 300;
+        font-family: 'RalewayLight', sans-serif;
         text-align: center;
       }
 

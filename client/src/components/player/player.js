@@ -1,130 +1,114 @@
 import React, { Component } from 'react'
+import MusicApiService from '../../services/music-api-service'
+import PlayerContent from '../player-content'
+import Turntable from '../turntable'
+
 import './player.scss'
 
 export default class Player extends Component {
   state = {
-    songNumber: 0,
-    name: '',
-    albom: '',
-    play: false,
-    isActivePlayer: false,
-    hystory: []
+    curSongNumber: 0,
+    curSongName: '',
+    curSongAlbom: '',
+    isPlay: false,
+    isPlayerActive: false,
+    playHystory: [],
+    isLoading: false
   }
 
-  componentDidMount = async () => await this.changeAudio(false)
+  componentDidMount = async () => await this.nextAudio(true)
 
-  activePlayerToggle = () => {
-    this.setState(({ isActivePlayer }) => ({ isActivePlayer: !isActivePlayer }))
+  musicApiService = new MusicApiService()
+
+  toggleActivePlayer = () => {
+    this.setState(({ isPlayerActive }) => ({ isPlayerActive: !isPlayerActive }))
     this.props.labelVisibleToggle()
   }
 
+  togglePlay = () => {
+    this.setState({ isPlay: !this.state.isPlay }, () => {
+      this.state.isPlay ? this.audio.play() : this.audio.pause()
+    })
+  }
+
   prevSong = async () => {
-    const hystory = this.state.hystory.slice()
-    if (hystory.length <= 2) return
+    if (this.state.isLoading) return
+    this.setState({ isLoading: true })
+
+    const playHystory = this.state.playHystory.slice()
+    if (playHystory.length <= 1) return
 
     this.togglePlay()
-    this.setState(({ hystory }) => {
-      hystory.pop()
+    this.setState(({ playHystory }) => {
+      const newPlayHystory = playHystory.slice()
+      newPlayHystory.pop()
+      return { playHystory: newPlayHystory }
     })
 
-    hystory.pop()
-    hystory.pop()
-    const songNumber = hystory.pop()
+    playHystory.pop()
+    const newSongNumber = playHystory.pop()
+    const { name, albom } = await this.musicApiService.getInfo(newSongNumber)
 
-    const infoResponse = await fetch(`/api/music/info/${songNumber}`)
-    const { name, albom } = await infoResponse.json()
-
-    this.audio = new Audio(`/api/music/song/${songNumber}`)
-    this.setState({ songNumber, name, albom })
-
+    this.audio = new Audio(`/api/music/song/${newSongNumber}`)
+    this.audio.addEventListener('ended', () => this.nextAudio(true))
+    this.setState({ songNumber: newSongNumber, isLoading: false, name, albom })
     this.togglePlay()
   }
 
-  changeAudio = async isNext => {
+  nextAudio = async isFirst => {
+    if (this.state.isLoading) return
     if (this.audio) this.togglePlay()
 
-    const sizeResponse = await fetch('/api/music/size')
-    const { size } = await sizeResponse.json()
-    const songNumber = Math.floor(Math.random() * (size - 1))
+    const size = await this.musicApiService.getSize()
+    const newSongNumber = Math.floor(Math.random() * (size - 1))
 
-    const infoResponse = await fetch(`/api/music/info/${songNumber}`)
-    const { name, albom } = await infoResponse.json()
+    const { name, albom } = await this.musicApiService.getInfo(newSongNumber)
 
-    this.audio = new Audio(`/api/music/song/${songNumber}`)
-    this.setState(({ hystory }) => {
-      hystory.push(songNumber)
-      return { hystory }
+    this.audio = new Audio(`/api/music/song/${newSongNumber}`)
+    this.audio.addEventListener('ended', () => this.nextAudio(true))
+
+    this.setState(({ playHystory }) => {
+      const newPlayHystory = playHystory.slice()
+      newPlayHystory.push(newSongNumber)
+      return {
+        curSongNumber: newSongNumber,
+        curSongName: name,
+        curSongAlbom: albom,
+        isLoading: false,
+        playHystory: newPlayHystory
+      }
     })
-    this.setState({ songNumber, name, albom })
 
-    if (isNext) this.togglePlay()
-  }
-
-  togglePlay = () => {
-    this.setState({ play: !this.state.play }, () => {
-      this.state.play ? this.audio.play() : this.audio.pause()
-    })
+    if (!isFirst) this.togglePlay()
   }
 
   render () {
     const {
-      songNumber,
-      isActivePlayer,
-      play,
-      name,
-      albom,
-      activePlayerToggle
+      curSongNumber,
+      isPlayerActive,
+      isPlay,
+      curSongName,
+      curSongAlbom
     } = this.state
 
     return (
       <>
         <div className='player-wrapper'>
-          <div className={isActivePlayer ? 'player active' : 'player'}>
-            <img
-              src={`/api/music/img/${songNumber}`}
-              onClick={this.activePlayerToggle}
-              alt='Тут должна быть обложка, но походу что-то сломалось'
-            ></img>
-            <div className='disk'></div>
-            <img
-              className={play ? 'small-disc play-disk' : 'small-disc'}
-              src={`/api/music/img/${songNumber}`}
-              alt='Тут должна быть обложка, но походу что-то сломалось'
-            ></img>
-            <div className='white-disc'></div>
+          <div className={isPlayerActive ? 'player active' : 'player'}>
+            <Turntable
+              curSongNumber={curSongNumber}
+              isPlay={isPlay}
+              toggleActivePlayer={this.toggleActivePlayer}
+            />
 
-            <div className='player-content'>
-              <p className='name'>{name}</p>
-              <p className='albom'>{albom}</p>
-
-              <div className='control'>
-                {/* <i class='fas fa-th-list fa-2x'></i> */}
-
-                <i
-                  className='fas fa-backward fa-2x'
-                  onClick={this.prevSong}
-                ></i>
-
-                {!play ? (
-                  <i
-                    className='fas fa-play fa-2x'
-                    onClick={this.togglePlay}
-                  ></i>
-                ) : (
-                  <i
-                    className='fas fa-pause fa-2x'
-                    onClick={this.togglePlay}
-                  ></i>
-                )}
-
-                <i
-                  className='fas fa-forward fa-2x'
-                  onClick={() => this.changeAudio(true)}
-                ></i>
-
-                {/* <i class='far fa-heart fa-2x'></i> */}
-              </div>
-            </div>
+            <PlayerContent
+              curSongName={curSongName}
+              curSongAlbom={curSongAlbom}
+              togglePlay={this.togglePlay}
+              prevSong={this.prevSong}
+              nextAudio={this.nextAudio}
+              isPlay={isPlay}
+            />
           </div>
         </div>
       </>
