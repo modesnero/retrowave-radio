@@ -89,7 +89,7 @@ export default class Player extends Component {
               <p className='albom'>{albom}</p>
 
               <div className='control'>
-                <i class='fas fa-th-list fa-2x'></i>
+                {/* <i class='fas fa-th-list fa-2x'></i> */}
 
                 <i
                   className='fas fa-backward fa-2x'
@@ -113,7 +113,7 @@ export default class Player extends Component {
                   onClick={() => this.updateAudio(true)}
                 ></i>
 
-                <i class='far fa-heart fa-2x'></i>
+                {/* <i class='far fa-heart fa-2x'></i> */}
               </div>
             </div>
           </div>
