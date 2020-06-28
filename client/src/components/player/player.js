@@ -12,8 +12,7 @@ export default class Player extends Component {
     curSongAlbom: '',
     isPlay: false,
     isPlayerActive: false,
-    playHystory: [],
-    isLoading: false
+    playHystory: []
   }
 
   componentDidMount = async () => await this.nextAudio(true)
@@ -33,7 +32,6 @@ export default class Player extends Component {
 
   prevSong = async () => {
     if (this.state.isLoading) return
-    this.setState({ isLoading: true })
 
     const playHystory = this.state.playHystory.slice()
     if (playHystory.length <= 1) return
@@ -51,12 +49,15 @@ export default class Player extends Component {
 
     this.audio = new Audio(`/api/music/song/${newSongNumber}`)
     this.audio.addEventListener('ended', () => this.nextAudio(true))
-    this.setState({ songNumber: newSongNumber, isLoading: false, name, albom })
+    this.setState({
+      songNumber: newSongNumber,
+      curSongName: name,
+      curSongAlbom: albom
+    })
     this.togglePlay()
   }
 
   nextAudio = async isFirst => {
-    if (this.state.isLoading) return
     if (this.audio) this.togglePlay()
 
     const size = await this.musicApiService.getSize()
@@ -74,7 +75,6 @@ export default class Player extends Component {
         curSongNumber: newSongNumber,
         curSongName: name,
         curSongAlbom: albom,
-        isLoading: false,
         playHystory: newPlayHystory
       }
     })

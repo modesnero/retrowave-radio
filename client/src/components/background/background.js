@@ -35,7 +35,7 @@ export default function Background ({ isLabelVisible }) {
         </span>
       </div>
 
-      {isLabelVisible ? <div className='triangle'></div> : null}
+      <div className={isLabelVisible ? 'triangle' : 'triangle invisible'}></div>
     </>
   )
 }
