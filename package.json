@@ -9,10 +9,10 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node app.js",
     "dev": "concurrently -c \"green.bold,red.bold\" \"npm run server:dev\" \"npm run client:dev\"",
+    "build": "npm run build --prefix client",
     "server:dev": "nodemon app.js",
     "client:install": "npm install --prefix client",
-    "client:dev": "cross-env NODE_ENV=development npm run start --prefix client",
-    "client:build": "npm run build --prefix client"
+    "client:dev": "cross-env NODE_ENV=development npm run start --prefix client"
   },
   "keywords": [
     "retro",
