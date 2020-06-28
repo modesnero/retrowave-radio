@@ -3,13 +3,27 @@ import Player from '../player'
 import './app.scss'
 
 export default class App extends Component {
+  state = {
+    isLabelVisible: true
+  }
+
+  labelVisibleToggle = () => {
+    this.setState(({ isLabelVisible }) => ({ isLabelVisible: !isLabelVisible }))
+  }
+
   render () {
+    const { isLabelVisible } = this.state
+    const labelStyle = isLabelVisible
+      ? 'label scale-in-center'
+      : 'label scale-out-center'
+
     return (
       <>
         <div className='inner-wrapper'>
           <div className='landscape'></div>
         </div>
-        <div className='label'>
+
+        <div className={labelStyle}>
           <span className='retro'>
             <span className='letter'>R</span>
             <span className='letter'>e</span>
@@ -31,8 +45,9 @@ export default class App extends Component {
             <span className='letter'>o</span>
           </span>
         </div>
-        <div className='triangle'></div>
-        <Player />
+
+        {isLabelVisible ? <div className='triangle'></div> : null}
+        <Player labelVisibleToggle={this.labelVisibleToggle} />
       </>
     )
   }

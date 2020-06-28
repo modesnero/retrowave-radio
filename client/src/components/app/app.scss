@@ -62,7 +62,7 @@ body {
 
 .label {
   position: absolute;
-  left: 0;
+  left: 40px;
   right: 0;
   margin: auto;
   bottom: 40px;
@@ -74,7 +74,7 @@ body {
   position: absolute;
   margin: auto;
   bottom: 100px;
-  left: 0;
+  left: 40px;
   right: 0;
   width: 0;
   height: 0;
@@ -146,14 +146,16 @@ body {
   -webkit-text-stroke-color: #000;
 }
 
-@media screen and (max-width: 600px) {
+// ==========   ADAPTIVE   ==========
+
+@media screen and (max-width: 900px) {
   .wave {
     font-size: 4.5em;
   }
 
   .retro {
     font-size: 4.2em;
-    margin-left: 5%;
+    margin-left: -5%;
     margin-bottom: -40px;
   }
 
@@ -164,6 +166,7 @@ body {
 
   .label {
     bottom: 0;
+    left: 0;
   }
 
   .triangle {
@@ -172,7 +175,79 @@ body {
     border-right: 190px solid transparent;
     border-bottom: 150px solid rgba(5, 5, 5, 0.33);
   }
+
+  .scale-in-center {
+    -webkit-animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: scale-in-center 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+  
+  .scale-out-center {
+    -webkit-animation: scale-out-center 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    animation: scale-out-center 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+  }
+  
+  @-webkit-keyframes scale-in-center {
+    0% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      opacity: 1;
+    }
+  
+    100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scale-in-center {
+    0% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      opacity: 1;
+    }
+  
+    100% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  @-webkit-keyframes scale-out-center {
+    0% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+    }
+  
+    100% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scale-out-center {
+    0% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+      opacity: 1;
+    }
+  
+    100% {
+      -webkit-transform: scale(0);
+      transform: scale(0);
+      opacity: 1;
+    }
+  }
 }
+
+// ==========   LABEL ANIMATION   ==========
+
+
+
+// ==========   FRAMES   ==========
 
 @-webkit-keyframes moveUp {
   0% {

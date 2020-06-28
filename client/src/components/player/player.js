@@ -11,7 +11,12 @@ export default class Player extends Component {
     hystory: []
   }
 
-  componentDidMount = async () => await this.updateAudio(false)
+  componentDidMount = async () => await this.changeAudio(false)
+
+  activePlayerToggle = () => {
+    this.setState(({ isActivePlayer }) => ({ isActivePlayer: !isActivePlayer }))
+    this.props.labelVisibleToggle()
+  }
 
   prevSong = async () => {
     const hystory = this.state.hystory.slice()
@@ -35,7 +40,7 @@ export default class Player extends Component {
     this.togglePlay()
   }
 
-  updateAudio = async isUpdate => {
+  changeAudio = async isNext => {
     if (this.audio) this.togglePlay()
 
     const sizeResponse = await fetch('/api/music/size')
@@ -52,7 +57,7 @@ export default class Player extends Component {
     })
     this.setState({ songNumber, name, albom })
 
-    if (isUpdate) this.togglePlay()
+    if (isNext) this.togglePlay()
   }
 
   togglePlay = () => {
@@ -62,18 +67,22 @@ export default class Player extends Component {
   }
 
   render () {
-    const { songNumber, isActivePlayer, play, name, albom } = this.state
+    const {
+      songNumber,
+      isActivePlayer,
+      play,
+      name,
+      albom,
+      activePlayerToggle
+    } = this.state
+
     return (
       <>
         <div className='player-wrapper'>
           <div className={isActivePlayer ? 'player active' : 'player'}>
             <img
               src={`/api/music/img/${songNumber}`}
-              onClick={() =>
-                this.setState(({ isActivePlayer }) => ({
-                  isActivePlayer: !isActivePlayer
-                }))
-              }
+              onClick={this.activePlayerToggle}
               alt='Тут должна быть обложка, но походу что-то сломалось'
             ></img>
             <div className='disk'></div>
@@ -110,7 +119,7 @@ export default class Player extends Component {
 
                 <i
                   className='fas fa-forward fa-2x'
-                  onClick={() => this.updateAudio(true)}
+                  onClick={() => this.changeAudio(true)}
                 ></i>
 
                 {/* <i class='far fa-heart fa-2x'></i> */}
