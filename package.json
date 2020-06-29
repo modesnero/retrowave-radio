@@ -12,7 +12,9 @@
     "build": "npm run build --prefix client",
     "server:dev": "nodemon app.js",
     "client:install": "npm install --prefix client",
-    "client:dev": "cross-env NODE_ENV=development npm run start --prefix client"
+    "client:dev": "cross-env NODE_ENV=development npm run start --prefix client",
+    "deploy:install": "npm install; npm run client:install; npm run build",
+    "deploy:update": "git pull origin master; npm run build"
   },
   "keywords": [
     "retro",
